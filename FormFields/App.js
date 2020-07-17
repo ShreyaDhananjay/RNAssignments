@@ -1,12 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Text, TextInput, Button, Alert } from 'react-native';
+import VirtualKeyboard from 'react-native-virtual-keyboard';
 
 
 export default App = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState(0);
   const [active, setActive] = useState(true);
-  const ref_input2 = useRef();
+  //const ref_input2 = useRef();
   const showAlert = () =>{
     Alert.alert(
        'Welcome!.'
@@ -20,24 +21,15 @@ export default App = () => {
       placeholder="John Doe"
       autoFocus={true}
       onChangeText={(val) => setName(val)}
-      returnKeyType="next"
-      onSubmitEditing={() => { ref_input2.current.focus(); }}/>
+      returnKeyType="next"/>
       <Text>Mobile Number</Text>
-      <TextInput
-      style={styles.input}
-      placeholder="9876543210"
-      onChangeText={(val) => setNumber(val)}
-      textContentType='telephoneNumber' 
-      dataDetectorTypes='phoneNumber' 
-      keyboardType='phone-pad'
-      onChangeText={(val) => {
-        setNumber(val.replace(/[^0-9]+/g, ''));
+      <Text>{number}</Text>
+      <VirtualKeyboard pressMode='string' onPress={(val) => {
+        setNumber(val);
         if(number)
-        setActive(false);
+        setActive(false)
         else
-        setActive(true);
-        }}
-      ref={ref_input2}/>
+        setActive(true)}}/>
       <Button
       disabled={active}
       title="Submit"
